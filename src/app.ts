@@ -9,7 +9,7 @@ const port = config.get<number>("port");
 const app = express();
 
 app.listen(port, async () => {
-	logger.info(`App is running on port http://localhost:${port}`);
+	logger.info(`http://localhost:${port}`);
 
 	await connectDB();
 	routes(app);

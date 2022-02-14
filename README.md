@@ -1,4 +1,4 @@
-# Backend Application for starter code for African reactors project
+# Reactors
 
 The backend uses the following technologies:
 

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { createSession } from "../services/session.service";
+import { createSession, getSessions } from "../services/session.service";
 import { validatePassword } from "../services/user.service";
 import { signJWT } from "../utils/jwt.utils";
 import config from "config";
@@ -8,6 +8,7 @@ export const createUserSessionHandler = async (req: Request, res: Response) => {
 	const { email, password } = req.body;
 
 	const user = await validatePassword(email, password);
+
 	if (!user) return res.status(401).send("Invalid email or password");
 
 	const session = await createSession(user._id, req.get("user-agent") || "");
@@ -32,4 +33,13 @@ export const createUserSessionHandler = async (req: Request, res: Response) => {
 		accessToken,
 		refreshToken,
 	});
+};
+
+export const getUserSessionsHandler = async (req: Request, res: Response) => {
+	const sessions = await getSessions({
+		user: (<any>req).user._id,
+		isValid: true,
+	});
+
+	return res.json(sessions);
 };

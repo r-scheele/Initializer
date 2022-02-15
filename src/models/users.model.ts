@@ -8,9 +8,10 @@ type comparePasswordFunctionType = (
 	enteredPassword: string
 ) => Promise<boolean>;
 
+// The optional tag is to remove the error tag, till i find the solution
 export interface User extends mongoose.Document {
-	email: string;
-	password: string;
+	email?: string;
+	password?: string;
 	createdAt: Date;
 	updatedAt: Date;
 	comparePassword: comparePasswordFunctionType;

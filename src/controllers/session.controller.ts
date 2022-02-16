@@ -8,9 +8,7 @@ import {
 import { validatePassword } from "../services/user.service";
 import { signJWT } from "../utils/jwt.utils";
 import config from "config";
-import { authenticate } from "../middleware/auth.user";
-import sessionModel from "../models/session.model";
-export const createUserSessionHandler = async (
+export const loginHandler = async (
 	req: Request,
 	res: Response,
 	next: NextFunction
@@ -53,7 +51,7 @@ export const getUserSessionsHandler = async (req: Request, res: Response) => {
 	if (sessions) return res.json(sessions);
 };
 
-export const deleteUserSessionHandler = async (req: Request, res: Response) => {
+export const logoutHandler = async (req: Request, res: Response) => {
 	await updateSession({ _id: req.user.session }, { isValid: false });
 	return res.json({
 		accessToken: null,

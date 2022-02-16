@@ -1,7 +1,7 @@
 import { Express, Request, Response } from "express";
 import {
-	createUserSessionHandler,
-	deleteUserSessionHandler,
+	loginHandler,
+	logoutHandler,
 	deleteUserSessionsHandler,
 	getUserSessionsHandler,
 } from "../controllers/session.controller";
@@ -17,14 +17,10 @@ const routes = (app: Express) => {
 	);
 
 	app.post("/api/users", validate(createUserSchema), createUserHandler);
-	app.post(
-		"/api/sessions",
-		validate(createSessionSchema),
-		createUserSessionHandler
-	);
+	app.post("/api/login", validate(createSessionSchema), loginHandler);
 	app.get("/api/sessions", authenticate, getUserSessionsHandler);
-	app.delete("/api/session", authenticate, deleteUserSessionHandler);
-	app.delete("/api/sessions", authenticate, deleteUserSessionsHandler);
+	app.delete("/api/logout", authenticate, logoutHandler);
+	app.delete("/api/logout/all", authenticate, deleteUserSessionsHandler);
 };
 
 export default routes;

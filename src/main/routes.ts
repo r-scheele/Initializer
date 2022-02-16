@@ -1,6 +1,8 @@
 import { Express, Request, Response } from "express";
 import {
 	createUserSessionHandler,
+	deleteUserSessionHandler,
+	deleteUserSessionsHandler,
 	getUserSessionsHandler,
 } from "../controllers/session.controller";
 import { createUserHandler } from "../controllers/user.controller";
@@ -20,7 +22,9 @@ const routes = (app: Express) => {
 		validate(createSessionSchema),
 		createUserSessionHandler
 	);
-	app.get("/api/sessions", getUserSessionsHandler);
+	app.get("/api/sessions", authenticate, getUserSessionsHandler);
+	app.delete("/api/session", authenticate, deleteUserSessionHandler);
+	app.delete("/api/sessions", authenticate, deleteUserSessionsHandler);
 };
 
 export default routes;
